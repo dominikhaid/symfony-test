@@ -1,0 +1,54 @@
+# PAGES
+
+index:
+  path: /
+  controller: App\Controller\DefaultController::index
+
+news:
+  path: /news
+  controller: App\Controller\NewsController::index
+
+about:
+  path: /about
+  controller: App\Controller\AboutController::index
+
+philosophy:
+  path: /about/philosophy
+  controller: App\Controller\PhilosophyController::index
+
+directors:
+  path: /about/directors
+  controller: App\Controller\DirectorsController::index
+
+team_id:
+  path: /about/team/{id}
+  controller: App\Controller\TeamController::id
+
+team_create:
+  path: /about/team/new/{name}
+  controller: App\Controller\TeamController::createMember
+
+team:
+  path: /about/team
+  controller: App\Controller\TeamController::index
+
+portfolio:
+  path: /portfolio
+  controller: App\Controller\PortfolioController::index
+
+contact:
+  path: /contact
+  controller: App\Controller\ContactController::index
+
+#FOOTER
+imprint:
+  path: /imprint
+  controller: App\Controller\ImprintController::index
+
+legals:
+  path: /legals
+  controller: App\Controller\LegalsController::index
+
+terms:
+  path: /terms-of-use
+  controller: App\Controller\TermsController::index

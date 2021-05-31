@@ -1,0 +1,11 @@
+{
+  "recommendations": [
+    "mblode.twig-language-2",
+    "phproberto.vscode-php-getters-setters",
+    "bmewburn.vscode-intelephense-client",
+    "felixfbecker.php-debug",
+    "junstyle.php-cs-fixer",
+    "christian-kohler.path-intellisense",
+    "eamodio.gitlens"
+  ]
+}

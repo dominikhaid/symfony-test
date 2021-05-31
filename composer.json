@@ -1,0 +1,10 @@
+{
+    "require": {
+        "symfony/asset": "^5.3",
+        "symfony/orm-pack": "^2.1",
+        "symfony/console": "^5.3"
+    },
+    "require-dev": {
+        "symfony/maker-bundle": "^1.31"
+    }
+}
