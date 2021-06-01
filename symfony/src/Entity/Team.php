@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\TeamRepository;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -10,6 +11,19 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Team
 {
+    /**
+     * @var DateTime
+     *
+     * @ORM\Column(name="created_at", type="datetime", options={"default": "CURRENT_TIMESTAMP"})
+     */
+    protected $createdAt;
+
+    /**
+     * @var DateTime
+     *
+     * @ORM\Column(name="updated_at", type="datetime", options={"default": "CURRENT_TIMESTAMP"})
+     */
+    protected $updatedAt;
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -33,7 +47,7 @@ class Team
     private $role;
 
     /**
-     * @ORM\Column(type="string", length=64, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $photo;
 
@@ -41,6 +55,41 @@ class Team
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $description;
+
+    public function updatedTimestamps(): void
+    {
+        $dateTimeNow = new DateTime('now');
+
+        $this->setUpdatedAt($dateTimeNow);
+
+        if (null === $this->getCreatedAt()) {
+            $this->setCreatedAt($dateTimeNow);
+        }
+    }
+
+    public function getCreatedAt(): ?DateTime
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(DateTime $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?DateTime
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(DateTime $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
 
     public function getId(): ?int
     {

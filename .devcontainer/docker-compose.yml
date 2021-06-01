@@ -20,8 +20,10 @@ services:
     # Overrides default command so things don't shut down after the process ends.
     command: sleep infinity
 
-    # Runs app on the same network as the database container, allows "forwardPorts" in devcontainer.json function.
-    network_mode: service:db
+    #network_mode: "services:db"
+    networks:
+      db:
+        ipv4_address: 172.19.0.4
 
     # Uncomment the next line to use a non-root user for all processes.
     # user: vscode
@@ -32,9 +34,15 @@ services:
   db:
     image: postgres:latest
     restart: unless-stopped
+    networks:
+      db:
+        ipv4_address: 172.19.0.2
     volumes:
       - postgres_data_local:/var/lib/postgresql/data
       - postgres_backup_local:/backups
+      - type: bind
+        source: ../sql/create_tables.sql
+        target: /docker-entrypoint-initdb.d/create_tables.sql
     environment:
       #POSTGRES_USER: postgres
       #POSTGRES_DB: postgres
@@ -47,6 +55,9 @@ services:
   pgadmin:
     image: dpage/pgadmin4
     restart: unless-stopped
+    networks:
+      db:
+        ipv4_address: 172.19.0.3
     environment:
       PGADMIN_DEFAULT_EMAIL: user@example.com
       PGADMIN_DEFAULT_PASSWORD: userpass
@@ -55,7 +66,14 @@ services:
 
     # Add "forwardPorts": ["5432"] to **devcontainer.json** to forward PostgreSQL locally.
     # (Adding the "ports" property to this file will not forward from a Codespace.)
-
 volumes:
   postgres_data_local:
   postgres_backup_local:
+
+networks:
+  db:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.19.0.0/24
