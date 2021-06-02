@@ -12,16 +12,12 @@ use Doctrine\ORM\Mapping as ORM;
 class Team
 {
     /**
-     * @var DateTime
-     *
-     * @ORM\Column(name="created_at", type="datetime", options={"default": "CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="created_at", type="datetime", nullable=true, options={"default": "CURRENT_TIMESTAMP"})
      */
     protected $createdAt;
 
     /**
-     * @var DateTime
-     *
-     * @ORM\Column(name="updated_at", type="datetime", options={"default": "CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="updated_at", type="datetime", nullable=true, options={"default": "CURRENT_TIMESTAMP"})
      */
     protected $updatedAt;
     /**

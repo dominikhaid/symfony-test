@@ -4,7 +4,9 @@ CREATE TABLE IF NOT EXISTS team  (
 	last_name VARCHAR(64),
 	role VARCHAR(32),
 	photo VARCHAR(255),
-	description VARCHAR(255)
+	description VARCHAR(255),
+	created_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+	updated_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT  CURRENT_TIMESTAMP
 );
 insert into team (id, first_name, last_name, role, photo, description) values (1, 'Neils', 'Kumar', 'Staff Accountant I', 'https://robohash.org/teneturomnispariatur.png?size=150x150&set=set1', 'Partial loss of teeth, unspecified cause, unspecified class');
 insert into team (id, first_name, last_name, role, photo, description) values (2, 'Briano', 'Harry', 'Sales Representative', 'https://robohash.org/utarchitectoveritatis.png?size=150x150&set=set1', 'Animal-rider injured in other transport accident, sequela');
@@ -56,3 +58,12 @@ insert into team (id, first_name, last_name, role, photo, description) values (4
 insert into team (id, first_name, last_name, role, photo, description) values (48, 'Nichols', 'Copins', 'Project Manager', 'https://robohash.org/ducimusnostrumperferendis.png?size=150x150&set=set1', 'Bitten by sea lion, subsequent encounter');
 insert into team (id, first_name, last_name, role, photo, description) values (49, 'Stephi', 'Tice', 'Civil Engineer', 'https://robohash.org/estsedet.png?size=150x150&set=set1', 'Nondisp fx of med condyle of l humer, subs for fx w malunion');
 insert into team (id, first_name, last_name, role, photo, description) values (50, 'Elbertina', 'Bemwell', 'Assistant Professor', 'https://robohash.org/utnullacupiditate.png?size=150x150&set=set1', 'Flexion deformity, knee');
+
+CREATE SEQUENCE public.team_id_seq
+    INCREMENT 50
+    START 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    CACHE 1;
+
+ALTER SEQUENCE public.team_id_seq OWNER TO dominik;

@@ -7,8 +7,8 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Team|null find($id, $lockMode = null, $lockVersion = null)
- * @method Team|null findOneBy(array $criteria, array $orderBy = null)
+ * @method null|Team find($id, $lockMode = null, $lockVersion = null)
+ * @method null|Team findOneBy(array $criteria, array $orderBy = null)
  * @method Team[]    findAll()
  * @method Team[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
@@ -17,6 +17,21 @@ class TeamRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Team::class);
+    }
+
+    public function getAllTeamMembers(): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            SELECT first_name, last_name, role, photo, description FROM team
+            ORDER BY first_name ASC
+            ';
+        $stmt = $conn->prepare($sql);
+        $stmt->executeQuery();
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $stmt->fetchAllAssociative();
     }
 
     // /**

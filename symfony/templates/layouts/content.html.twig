@@ -3,5 +3,9 @@
 	<main id="content" class="d-flex justify-content-center container-fluid p-3 align-items-center flex-column">
 		<h1>Blog</h1>
 		{% block page_contents %}{% endblock %}
+		{% set items = include("json/test.json")  | json_decode %}
+		{% for item in items %}
+			<p class="text-dark">{{item.name}}</p>
+		{% endfor %}
 	</main>
 {% endblock %}

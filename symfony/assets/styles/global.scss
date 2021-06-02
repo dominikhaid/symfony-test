@@ -34,11 +34,28 @@ $dark: $gray-900;
 
 #root {
   display: grid;
-  grid-template-rows: 200px 50px 1fr 200px;
+  grid-template-rows: auto auto 1fr auto;
   min-height: 100vh;
   max-height: 100vh;
   position: relative;
   overflow: hidden;
+}
+
+header #webshot-logo g:nth-child(1) {
+  fill: $primary;
+}
+
+header #webshot-logo g:nth-child(2) path {
+  fill: $secondary;
+}
+
+header #webshot-logo g:nth-child(2) ellipse {
+  stroke: $primary;
+}
+
+footer a,
+footer .nav-link {
+  color: $secondary;
 }
 
 // the ~ allows you to reference things in node_modules

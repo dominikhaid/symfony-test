@@ -18,7 +18,7 @@
   "scripts": {
     "dev": "yarn encore dev-server",
     "serve": "symfony serve",
-    "db:migrate": "php bin/console doctrine:migrations:migrate",
+    "db:migrate": "php bin/console doctrine:migrations:migrate --write-sql",
     "db:make": "php bin/console make:migration",
     "cert": "symfony server:ca:install",
     "check": "symfony check:requirements"

@@ -20,17 +20,13 @@ directors:
   path: /about/directors
   controller: App\Controller\DirectorsController::index
 
-team_id:
-  path: /about/team/{id}
-  controller: App\Controller\TeamController::id
+teamApi:
+  path: /api/team
+  controller: App\Controller\TeamController::teamApi
 
-team_create:
-  path: /about/team/new/{name}
-  controller: App\Controller\TeamController::createMember
-
-team:
+teamIndex:
   path: /about/team
-  controller: App\Controller\TeamController::index
+  controller: App\Controller\TeamController::teamIndex
 
 portfolio:
   path: /portfolio

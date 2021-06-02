@@ -1,5 +1,10 @@
 {% block footer %}
-	<footer class="d-flex justify-content-center container-fluid p-3" id="footer">
+	<footer class="bg-dark justify-content-center container-fluid p-3" id="footer">
 		{{ include('layouts/footer_nav.html.twig') }}
+		<div class="container-fluid text-white text-center flex flex-column w-100 flex-wrap py-6 m-2">
+			<b>Symfony&nbsp;Demo</b>
+			<br>
+			<a taget="_blank" href="https://www.dominikhaid.de">www.dominikhaid.de</a>&nbsp;©&nbsp;Dominik Haid
+		</div>
 	</footer>
 {% endblock %}
