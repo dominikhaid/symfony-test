@@ -24,8 +24,12 @@ teamApi:
   path: /api/team
   controller: App\Controller\TeamController::teamApi
 
-teamIndex:
+teamMain:
   path: /about/team
+  controller: App\Controller\TeamController::teamMain
+
+teamIndex:
+  path: /about/team/{id}
   controller: App\Controller\TeamController::teamIndex
 
 portfolio:

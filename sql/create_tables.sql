@@ -8,16 +8,28 @@ CREATE TABLE IF NOT EXISTS team  (
 	created_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
 	updated_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT  CURRENT_TIMESTAMP
 );
-insert into team (id, first_name, last_name, role, photo, description) values (1, 'Neils', 'Kumar', 'Staff Accountant I', 'https://robohash.org/teneturomnispariatur.png?size=150x150&set=set1', 'Partial loss of teeth, unspecified cause, unspecified class');
-insert into team (id, first_name, last_name, role, photo, description) values (2, 'Briano', 'Harry', 'Sales Representative', 'https://robohash.org/utarchitectoveritatis.png?size=150x150&set=set1', 'Animal-rider injured in other transport accident, sequela');
-insert into team (id, first_name, last_name, role, photo, description) values (3, 'Eberhard', 'Binfield', 'Environmental Tech', 'https://robohash.org/inciduntquissint.png?size=150x150&set=set1', 'Other diseases of lip and oral mucosa');
-insert into team (id, first_name, last_name, role, photo, description) values (4, 'Smith', 'Cosgrave', 'Web Developer II', 'https://robohash.org/rerumvoluptatumeos.png?size=150x150&set=set1', 'Insect bite (nonvenomous) of left front wall of thorax');
-insert into team (id, first_name, last_name, role, photo, description) values (5, 'Margit', 'Rumming', 'Structural Engineer', 'https://robohash.org/eteosincidunt.png?size=150x150&set=set1', 'War op w explosn of sea-based artlry shell, civ, sequela');
-insert into team (id, first_name, last_name, role, photo, description) values (6, 'Lorettalorna', 'Craddy', 'VP Product Management', 'https://robohash.org/saepevoluptatemquaerat.png?size=150x150&set=set1', 'Toxic effect of oth inorganic substances, assault, init');
-insert into team (id, first_name, last_name, role, photo, description) values (7, 'Leann', 'Kellett', 'Statistician II', 'https://robohash.org/omnisabeum.png?size=150x150&set=set1', 'Other superficial bite of left upper arm');
-insert into team (id, first_name, last_name, role, photo, description) values (8, 'Cedric', 'Ramsay', 'Tax Accountant', 'https://robohash.org/voluptatemperspiciatisenim.png?size=150x150&set=set1', 'Herpesviral gingivostomatitis and pharyngotonsillitis');
-insert into team (id, first_name, last_name, role, photo, description) values (9, 'Dav', 'Blazynski', 'Chemical Engineer', 'https://robohash.org/perspiciatisautembeatae.png?size=150x150&set=set1', 'Mtrcy driver injured in nonclsn trnsp accident nontraf, subs');
-insert into team (id, first_name, last_name, role, photo, description) values (10, 'Bruis', 'Such', 'VP Accounting', 'https://robohash.org/aliquidofficiapossimus.png?size=150x150&set=set1', 'Unsp injury of posterior tibial artery, right leg, subs');
+
+
+CREATE SEQUENCE public.team_id_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    CACHE 1;
+
+ALTER SEQUENCE public.team_id_seq OWNER TO dominik;
+
+
+insert into team (id, first_name, last_name, role, photo, description) values (1, 'Angelo', 'Abear', 'Staff Accountant I', 'angelo-abear-XUMb1TaojwY.jpg', 'Partial loss of teeth, unspecified cause, unspecified class');
+insert into team (id, first_name, last_name, role, photo, description) values (2, 'Barna', 'Bartis', 'Sales Representative', 'barna-bartis-2x3vfVxwR7o.jpg', 'Animal-rider injured in other transport accident, sequela');
+insert into team (id, first_name, last_name, role, photo, description) values (3, 'Carlos', 'Magno', 'Magno', 'carlos-magno-sTORW_4vrwg.jpg', 'Other diseases of lip and oral mucosa');
+insert into team (id, first_name, last_name, role, photo, description) values (4, 'Christian', 'Buehner', 'Web Developer II', 'christian-buehner-DItYlc26zVI.jpg', 'Insect bite (nonvenomous) of left front wall of thorax');
+insert into team (id, first_name, last_name, role, photo, description) values (5, 'Xaen', 'Ascllo', 'Structural Engineer', 'disruptivo-Xaen-acsLLo.jpg', 'War op w explosn of sea-based artlry shell, civ, sequela');
+insert into team (id, first_name, last_name, role, photo, description) values (6, 'Dimtry', 'Vechorko', 'VP Product Management', 'dmitry-vechorko-uQP6mJ5x9Oo.jpg', 'Toxic effect of oth inorganic substances, assault, init');
+insert into team (id, first_name, last_name, role, photo, description) values (7, 'Yion', 'Lee', 'Statistician II', 'mister-lee-_KL3FFG4eBA.jpg', 'Other superficial bite of left upper arm');
+insert into team (id, first_name, last_name, role, photo, description) values (8, 'Ryan', 'Mill', 'Tax Accountant', 'rayan-mill-AGlO2jlVE4c.jpg', 'Herpesviral gingivostomatitis and pharyngotonsillitis');
+insert into team (id, first_name, last_name, role, photo, description) values (9, 'Yousaf', 'Usman', 'Chemical Engineer', 'usman-yousaf-isA_U8EDIZc.jpg', 'Mtrcy driver injured in nonclsn trnsp accident nontraf, subs');
+insert into team (id, first_name, last_name, role, photo, description) values (10, 'Vladyslav', 'Tyzun', 'VP Accounting', 'vladyslav-tyzun-B_gJt-6xK30.jpg', 'Unsp injury of posterior tibial artery, right leg, subs');
 insert into team (id, first_name, last_name, role, photo, description) values (11, 'Tyrus', 'Battye', 'Programmer I', 'https://robohash.org/velquidemexcepturi.png?size=150x150&set=set1', 'Other fracture of shaft of unspecified fibula, sequela');
 insert into team (id, first_name, last_name, role, photo, description) values (12, 'Evvy', 'Romand', 'Editor', 'https://robohash.org/numquamearumnihil.png?size=150x150&set=set1', 'Intentional collision of motor vehicle w tree, init encntr');
 insert into team (id, first_name, last_name, role, photo, description) values (13, 'Bernadette', 'Hayley', 'Analog Circuit Design manager', 'https://robohash.org/utnisivero.png?size=150x150&set=set1', 'Type III traum spondylolysis of 7th cervcal vert, 7thG');
@@ -59,11 +71,3 @@ insert into team (id, first_name, last_name, role, photo, description) values (4
 insert into team (id, first_name, last_name, role, photo, description) values (49, 'Stephi', 'Tice', 'Civil Engineer', 'https://robohash.org/estsedet.png?size=150x150&set=set1', 'Nondisp fx of med condyle of l humer, subs for fx w malunion');
 insert into team (id, first_name, last_name, role, photo, description) values (50, 'Elbertina', 'Bemwell', 'Assistant Professor', 'https://robohash.org/utnullacupiditate.png?size=150x150&set=set1', 'Flexion deformity, knee');
 
-CREATE SEQUENCE public.team_id_seq
-    INCREMENT 50
-    START 1
-    MINVALUE 1
-    MAXVALUE 9223372036854775807
-    CACHE 1;
-
-ALTER SEQUENCE public.team_id_seq OWNER TO dominik;
