@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+{% block content %}
+	<main id="content" class="d-flex justify-content-center container-fluid p-3 align-items-center flex-column">
+		<h1>Blog</h1>
+		{% block page_contents %}
+			<div class="container">
+				<div class="row row-cols-auto g-3">
+					{% for member in team %}
+						<div class="col">
+							<div class="card" style="width: 18rem;">
+								<img src="{{member.photo}}" class="card-img-top" alt="{{member.first_name}} {{member.last_name}}">
+								<div class="card-body">
+									<h5 class="card-title">{{member.first_name}}
+										{{member.last_name}}</h5>
+									<h6 class="card-subtitle mb-2 text-muted">{{member.role}}</h6>
+									<p class="card-text">{{member.description}}</p>
+									<a href="/about/team/{{member.id}}" class="btn btn-primary">Details</a>
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			{% endblock %}
+		</main>
+	{% endblock %}

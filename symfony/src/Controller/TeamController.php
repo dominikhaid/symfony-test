@@ -10,6 +10,25 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class TeamController extends AbstractController
 {
+    /**
+     * Converts result to json response.
+     *
+     * @param mixed  $member
+     * @param string $message
+     */
+    public function apiResult($member, $message): Response
+    {
+        $result = [];
+        $result['message'] = $message;
+        $result['data']['firstName'] = $member->getFirstName();
+        $result['data']['lastName'] = $member->getLastName();
+        $result['data']['role'] = $member->getRole();
+        $result['data']['photo'] = $member->getPhoto();
+        $result['data']['description'] = $member->getDescription();
+
+        return new Response(json_encode($result));
+    }
+
     /*
      * TEAM MEMBER API
      *
@@ -24,10 +43,12 @@ class TeamController extends AbstractController
         $id = $request->query->get('id');
         $member = false;
 
+        // if request query has id get team member by id
         if ($id) {
             $member = $entityManager->getRepository(Team::class)->find($id);
         }
 
+        // if no id in query and method is get load all team members
         if (!$id && Request::METHOD_GET == $request->getMethod()) {
             $member = $entityManager->getRepository(Team::class)->getAllTeamMembers();
 
@@ -43,22 +64,17 @@ class TeamController extends AbstractController
             return new Response(json_encode($result));
         }
 
+        //if no member is found and method is not post, error response
         if (!$member && Request::METHOD_POST != $request->getMethod()) {
             throw $this->createNotFoundException('No team members found');
         }
 
+        // get one by id
         if (Request::METHOD_GET == $request->getMethod()) {
-            $result = [];
-            $result['message'] = 'found team member';
-            $result['data']['firstName'] = $member->getFirstName();
-            $result['data']['lastName'] = $member->getLastName();
-            $result['data']['role'] = $member->getRole();
-            $result['data']['photo'] = $member->getPhoto();
-            $result['data']['description'] = $member->getDescription();
-
-            return new Response(json_encode($result));
+            return $this->apiResult($member, 'Found team member');
         }
 
+        // update one by id
         if (Request::METHOD_PATCH == $request->getMethod()) {
             $firstName = $request->request->get('firstName');
             $lastName = $request->request->get('lastName');
@@ -85,32 +101,18 @@ class TeamController extends AbstractController
 
             $entityManager->flush();
 
-            $result = [];
-            $result['message'] = 'Updated team member';
-            $result['data']['firstName'] = $member->getFirstName();
-            $result['data']['lastName'] = $member->getLastName();
-            $result['data']['role'] = $member->getRole();
-            $result['data']['photo'] = $member->getPhoto();
-            $result['data']['description'] = $member->getDescription();
-
-            return new Response(json_encode($result));
+            return $this->apiResult($member, 'Updated team member');
         }
 
+        // delete one by id
         if (Request::METHOD_DELETE == $request->getMethod()) {
             $entityManager->remove($member);
             $entityManager->flush();
 
-            $result = [];
-            $result['message'] = 'Deleted team member';
-            $result['data']['firstName'] = $member->getFirstName();
-            $result['data']['lastName'] = $member->getLastName();
-            $result['data']['role'] = $member->getRole();
-            $result['data']['photo'] = $member->getPhoto();
-            $result['data']['description'] = $member->getDescription();
-
-            return new Response(json_encode($result));
+            return $this->apiResult($member, 'Deleted team member');
         }
 
+        // create one by id
         if (Request::METHOD_POST == $request->getMethod()) {
             $firstName = $request->request->get('firstName');
             $lastName = $request->request->get('lastName');
@@ -139,29 +141,58 @@ class TeamController extends AbstractController
 
             $entityManager->persist($member);
             $entityManager->flush();
-            $result = [];
-            $result['message'] = 'Saved team member';
-            $result['data']['firstName'] = $member->getFirstName();
-            $result['data']['lastName'] = $member->getLastName();
-            $result['data']['role'] = $member->getRole();
-            $result['data']['photo'] = $member->getPhoto();
-            $result['data']['description'] = $member->getDescription();
 
-            return new Response(json_encode($result));
+            return $this->apiResult($member, 'Saved team member');
         }
     }
 
     /*
-     * RENDER TEAM
-     *
+        * RENDER TEAM MEMBER DETAIL
+        *
+        * @return Response
+        */
+
+    #[Route('/about/team', name: 'teamIndex')]
+    public function teamIndex(int $id): Response
+    {
+        $member = [];
+        $entityManager = $this->getDoctrine()->getManager();
+        $result = $entityManager->getRepository(Team::class)->find($id);
+        $member['id'] = $result->getId();
+        $member['first_name'] = $result->getFirstName();
+        $member['last_name'] = $result->getLastName();
+        $member['role'] = $result->getRole();
+        $member['photo'] = $result->getPhoto();
+        $member['description'] = $result->getDescription();
+
+        if (!$member) {
+            throw $this->createNotFoundException('No team members found');
+        }
+
+        return $this->render('layouts/team_detail.twig', [
+            'member' => $member,
+        ]);
+    }
+
+    /* *
+     * RENDER TEAM MAIN PAGE TILES VIEW
      * @return Response
      */
 
-    #[Route('/about/team', name: 'teamIndex')]
-    public function teamIndex(): Response
+    #[Route('/about/team', name: 'teamMain')]
+    public function teamMain(): Response
     {
-        return $this->render('layouts/content.html.twig', [
-            'controller_name' => 'TeamController',
+        $entityManager = $this->getDoctrine()->getManager();
+        $member = $entityManager->getRepository(Team::class)->getAllTeamMembers();
+
+        if (!$member) {
+            throw $this->createNotFoundException('No team members found');
+        }
+
+        $entityManager->flush();
+
+        return $this->render('layouts/team_tiles.html.twig', [
+            'team' => $member,
         ]);
     }
 }
