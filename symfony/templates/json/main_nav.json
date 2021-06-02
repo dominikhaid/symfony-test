@@ -1,0 +1,40 @@
+[
+  {
+    "title": "Home",
+    "href": "/",
+    "submenu": []
+  },
+  {
+    "title": "News",
+    "href": "/news",
+    "submenu": []
+  },
+  {
+    "title": "Über uns",
+    "href": "/about",
+    "submenu": [
+      {
+        "title": "Philosophie",
+        "href": "/about/philosophy"
+      },
+      {
+        "title": "Geschäftsführung",
+        "href": "/about/directors"
+      },
+      {
+        "title": "Mitarbeiter",
+        "href": "/about/team"
+      }
+    ]
+  },
+  {
+    "title": "Referenzen",
+    "href": "/portfolio",
+    "submenu": []
+  },
+  {
+    "title": "Kontakt",
+    "href": "/contact",
+    "submenu": []
+  }
+]

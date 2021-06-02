@@ -1,15 +1,12 @@
 {% block footer_nav %}
 	<div class="container-fluid flex flex-column w-100 flex-wrap py-6">
 		<ul class="nav p-2 justify-content-center">
-			<li class="nav-item">
-				<a class="nav-link active" aria-current="page" href="/imprint">Impressum</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="/legals">Rechtliche Hinweise</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="/terms-of-use">Nutzungsbedingungen</a>
-			</li>
+			{% set items = include("json/footer_nav.json")  | json_decode %}
+			{% for item in items %}
+				<li class="nav-item">
+					<a class="nav-link active" href="{{item.href}}">{{item.title}}</a>
+				</li>
+			{% endfor %}
 		</ul>
 	</div>
 {% endblock %}
