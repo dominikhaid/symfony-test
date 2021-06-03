@@ -9,11 +9,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class PortfolioController extends AbstractController
 {
     /**
-     * @Route("/portfolio")
+     * @Route("/portfolio",name="/portfolio")
      */
     public function number(): Response
     {
-        return $this->render('layouts/content.html.twig', [
+        return $this->render('pages/portfolio.html.twig', [
             //'user_first_name' => $userFirstName,
             //'notifications' => $userNotifications,
         ]);

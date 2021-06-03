@@ -1,0 +1,26 @@
+{% extends 'layouts/content.html.twig' %}
+{% block content %}
+	<div class="logo-headline w-100 d-flex mt-5 mb-3 align-self-start">
+		<div class="img m-2 d-flex flex-wrap  align-self-center">
+			{{ source('svg/brand-logo.svg') }}
+		</div>
+		<div class="w-75 d-flex flex-wrap align-self-end">
+			<h1 class="m-0">{{member.first_name}}
+				{{member.last_name}}</h1>
+		</div>
+	</div>
+	{% block page_contents %}
+		<div class="container">
+			<div class="card" style="width: 18rem;">
+				<img src="/images/team/{{asset(member.photo)}}" class="team card-img-top" alt="{{member.first_name}} {{member.last_name}}">
+				<div class="card-body">
+					<h5 class="card-title">{{member.first_name}}
+						{{member.last_name}}</h5>
+					<h6 class="card-subtitle mb-2 text-muted">{{member.role}}</h6>
+					<p class="card-text">{{member.description}}</p>
+					<a href="/about/team?id={{member.id}}" class="btn btn-primary">Details</a>
+				</div>
+			</div>
+		</div>
+	{% endblock %}
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'layouts/content.html.twig' %}
+{% block content %}
+	<div class="logo-headline d-flex mt-5 mb-3 align-self-center">
+		<div class="img m-2 d-flex flex-wrap  align-self-center">
+			{{ source('svg/brand-logo.svg') }}
+		</div>
+		<div class="w-25 h-100 d-flex align-self-end">
+			<h1 class="m-0">Philosophie</h1>
+		</div>
+	</div>
+	<p>COMING SOON</p>
+	{% block page_contents %}{% endblock %}
+{% endblock %}

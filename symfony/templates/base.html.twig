@@ -19,7 +19,11 @@
 			<div id="root">
 				{{ include('layouts/header.html.twig') }}
 				{{ include('layouts/top_nav.html.twig') }}
-				{% block content %}{% endblock %}
+				<main class="pt-3 pb-3">
+					<div id="content" class="shadow d-flex justify-content-center bg-light container-xl p-3 align-items-center flex-column">
+						{% block content %}{% endblock %}
+					</div>
+				</main>
 				{{ include('layouts/footer.html.twig') }}
 			</divid="root">
 		{% endblock %}

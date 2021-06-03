@@ -9,11 +9,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class NewsController extends AbstractController
 {
     /**
-     * @Route("/news")
+     * @Route("/news",name="/news")
      */
     public function number(): Response
     {
-        return $this->render('layouts/content.html.twig', [
+        return $this->render('pages/news.html.twig', [
             //'user_first_name' => $userFirstName,
             //'notifications' => $userNotifications,
         ]);

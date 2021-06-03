@@ -1,10 +1,11 @@
 {% block footer_nav %}
+	{% set route_name = app.request.attributes.get('_route') %}
 	<div class="container-fluid flex flex-column w-100 flex-wrap py-6">
 		<ul class="nav p-2 justify-content-center">
 			{% set items = include("json/footer_nav.json")  | json_decode %}
 			{% for item in items %}
 				<li class="nav-item">
-					<a class="nav-link active" href="{{item.href}}">{{item.title}}</a>
+					<a class="{{ (route_name == item.href) ? 'nav-link active' : 'nav-link' }}" href="{{item.href}}">{{item.title}}</a>
 				</li>
 			{% endfor %}
 		</ul>

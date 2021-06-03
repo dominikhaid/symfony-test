@@ -9,11 +9,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class TermsController extends AbstractController
 {
     /**
-     * @Route("/terms-of-use")
+     * @Route("/terms-of-use",name="/terms-of-use")
      */
     public function number(): Response
     {
-        return $this->render('layouts/content.html.twig', [
+        return $this->render('pages/terms.html.twig', [
             //'user_first_name' => $userFirstName,
             //'notifications' => $userNotifications,
         ]);

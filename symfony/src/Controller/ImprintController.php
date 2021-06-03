@@ -9,11 +9,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class ImprintController extends AbstractController
 {
     /**
-     * @Route("/imprint")
+     * @Route("/imprint",name="/imprint")
      */
     public function number(): Response
     {
-        return $this->render('layouts/content.html.twig', [
+        return $this->render('pages/imprint.html.twig', [
             //'user_first_name' => $userFirstName,
             //'notifications' => $userNotifications,
         ]);

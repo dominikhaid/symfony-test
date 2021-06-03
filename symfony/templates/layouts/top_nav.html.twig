@@ -1,14 +1,14 @@
 {% block top_nav %}
-	<nav class="navbar navbar-expand-lg navbar-dark bg-primary flex flex-column w-100 flex-wrap px-5">
+	{% set route_name = app.request.attributes.get('_route') %}
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark flex flex-column w-100 flex-wrap  px-5 py-0">
 		<div class="container-fluid">
-			<a class="navbar-brand" href="#">Navbar</a>
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 					{% set items = include("json/main_nav.json")  | json_decode %}
 					{% for item in items %}
 						{% if not item.submenu or item.submenu | length == 0 %}
 							<li class="nav-item">
-								<a class="nav-link active" href="{{item.href}}">{{item.title}}</a>
+								<a class="{{ (route_name == item.href) ? 'nav-link active' : 'nav-link' }}" href="{{item.href}}">{{item.title}}</a>
 							</li>
 
 						{% elseif item.submenu and item.submenu | length > 0 %}

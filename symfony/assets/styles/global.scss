@@ -33,26 +33,73 @@ $light: $gray-100;
 $dark: $gray-900;
 
 #root {
+  grid-template-rows: auto auto minmax(200px, 1fr) auto;
+  position: relative;
+  overflow: hidden;
   display: grid;
   position: relative;
   min-height: 100vh;
 }
 
-header #webshot-logo g:nth-child(1) {
-  fill: $primary;
-}
-
-header #webshot-logo g:nth-child(2) path {
-  fill: $secondary;
-}
-
-header #webshot-logo g:nth-child(2) ellipse {
-  stroke: $primary;
-}
-
 footer a,
 footer .nav-link {
   color: $secondary;
+}
+
+img.team {
+  filter: saturate(0);
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Oxanium:wght@200;300;400;500;600;700;800&display=swap");
+
+#brand-right {
+  max-width: 300px;
+}
+
+.logo-headline .img {
+  width: 140px;
+}
+
+header {
+  background-image: url("https://localhost:8000/images/daniel-korpai-oWiEeTIxYvk.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 350px;
+}
+
+main {
+  min-height: 500px;
+  background: var(--bs-gray-dark);
+}
+
+body {
+  font-family: Oxanium, Arial, Helvetica, sans-serif;
+}
+
+.nav-link.active {
+  position: relative;
+}
+
+.nav-link.active::after {
+  content: " ";
+  width: 100%;
+  height: 2px;
+  background: white;
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+}
+
+nav {
+  border-top: $secondary 3px solid;
+}
+
+#content {
+  min-height: 100%;
+}
+
+footer {
+  border-top: $secondary 3px solid;
 }
 
 // the ~ allows you to reference things in node_modules

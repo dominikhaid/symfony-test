@@ -36,7 +36,7 @@ class TeamController extends AbstractController
      * @return Response
      */
 
-    #[Route('/api/team', name: 'teamApi')]
+    #[Route('/api/team', name: '/api/team')]
     public function teamApi(Request $request): Response
     {
         $entityManager = $this->getDoctrine()->getManager();
@@ -152,7 +152,7 @@ class TeamController extends AbstractController
         * @return Response
         */
 
-    #[Route('/about/team', name: 'teamIndex')]
+    #[Route('/about/team', name: '/about/team')]
     public function teamIndex(int $id): Response
     {
         $member = [];
@@ -169,7 +169,7 @@ class TeamController extends AbstractController
             throw $this->createNotFoundException('No team members found');
         }
 
-        return $this->render('layouts/team_detail.twig', [
+        return $this->render('pages/team_detail.twig', [
             'member' => $member,
         ]);
     }
@@ -179,7 +179,7 @@ class TeamController extends AbstractController
      * @return Response
      */
 
-    #[Route('/about/team', name: 'teamMain')]
+    #[Route('/about/team', name: '/about/team')]
     public function teamMain(): Response
     {
         $entityManager = $this->getDoctrine()->getManager();
@@ -191,7 +191,7 @@ class TeamController extends AbstractController
 
         $entityManager->flush();
 
-        return $this->render('layouts/team_tiles.html.twig', [
+        return $this->render('pages/team_tiles.html.twig', [
             'team' => $member,
         ]);
     }
