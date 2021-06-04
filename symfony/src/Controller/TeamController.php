@@ -174,6 +174,34 @@ class TeamController extends AbstractController
         ]);
     }
 
+    /*
+       * RENDER TEAM MEMBER EDIT FORM
+       *
+       * @return Response
+       */
+
+    #[Route('/about/team/edit', name: '/about/team/edit')]
+    public function teamEdit(int $id): Response
+    {
+        $member = [];
+        $entityManager = $this->getDoctrine()->getManager();
+        $result = $entityManager->getRepository(Team::class)->find($id);
+        $member['id'] = $result->getId();
+        $member['first_name'] = $result->getFirstName();
+        $member['last_name'] = $result->getLastName();
+        $member['role'] = $result->getRole();
+        $member['photo'] = $result->getPhoto();
+        $member['description'] = $result->getDescription();
+
+        if (!$member) {
+            throw $this->createNotFoundException('No team members found');
+        }
+
+        return $this->render('pages/team_edit.twig', [
+            'member' => $member,
+        ]);
+    }
+
     /* *
      * RENDER TEAM MAIN PAGE TILES VIEW
      * @return Response

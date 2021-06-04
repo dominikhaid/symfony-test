@@ -61,7 +61,7 @@ img.team {
 }
 
 header {
-  background-image: url("https://localhost:8000/images/daniel-korpai-oWiEeTIxYvk.jpg");
+  background-image: url("http://localhost:8000/images/header.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   min-height: 350px;
@@ -100,6 +100,21 @@ nav {
 
 footer {
   border-top: $secondary 3px solid;
+}
+
+.card.team {
+  width: 70%;
+}
+
+@media  screen and (max-width:767px) {
+  .card.team {
+  width: 100%;
+}
+}
+
+#root nav.navbar {
+  min-height: 80px;
+  place-content: center;
 }
 
 // the ~ allows you to reference things in node_modules

@@ -23,8 +23,6 @@ class JsonDecodeTwigExtension extends AbstractExtension
 
     public function json_decode($json, $assoc = false)
     {
-        $decoded = json_decode($json, $assoc);
-
-        return $decoded;
+        return json_decode($json, $assoc);
     }
 }

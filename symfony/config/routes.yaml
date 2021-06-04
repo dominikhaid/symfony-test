@@ -32,6 +32,10 @@ teamIndex:
   path: /about/team/{id}
   controller: App\Controller\TeamController::teamIndex
 
+teamEdit:
+  path: /about/team/edit
+  controller: App\Controller\TeamController::teamEdit
+
 portfolio:
   path: /portfolio
   controller: App\Controller\PortfolioController::index
@@ -39,6 +43,18 @@ portfolio:
 contact:
   path: /contact
   controller: App\Controller\ContactController::index
+
+adminTeam:
+  path: /admin/team
+  controller: App\Controller\AdminController::index
+
+adminTeamEdit:
+  path: /admin/team/edit
+  controller: App\Controller\AdminController::updateTeam
+
+adminTeamNew:
+  path: /admin/team/new
+  controller: App\Controller\AdminController::newTeam
 
 #FOOTER
 imprint:

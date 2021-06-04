@@ -1,0 +1,35 @@
+{% extends 'layouts/content.html.twig' %}
+{% block javascripts %}
+	{{ encore_entry_script_tags('team') }}
+{% endblock %}
+{% block content %}
+	<div class="logo-headline  w-100  d-flex mt-5 mb-3 align-self-start">
+		<div class="img m-2 d-flex flex-wrap  align-self-center">
+			{{ source('svg/brand-logo.svg') }}
+		</div>
+		<div class="w-75 d-flex flex-wrap  align-self-end">
+			<h1 class="m-0">Admin-Team</h1>
+		</div>
+	</div>
+	{% block page_contents %}
+		<div class="p-0 container">
+			<ul class="list-group">
+				<li class="list-group-item d-flex justify-content-end align-items-center">
+					<button onclick="window.location= '/admin/team/new'" type="button" class="btn btn-success m-1">new</button>
+				</li>
+				{% for member in team %}
+					<li class="list-group-item d-flex justify-content-between align-items-center">
+						<p>{{member.first_name}}
+							{{member.last_name}}
+							|
+							<span class="ml-5 text-gray">{{member.role}}</span>
+						</p>
+						<div class="d-flex justify-content-end">
+							<button onclick="window.location= '/admin/team/edit?id={{member.id}}'" type="button" class="btn btn-primary m-1">edit</button>
+							<button data-id="{{member.id}}" type="button" class="delteMember btn btn-danger m-1">delete</button>
+						</div>
+					</li>
+				{% endfor %}
+			</ul>
+		{% endblock %}
+	{% endblock %}

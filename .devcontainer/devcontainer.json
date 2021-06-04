@@ -90,7 +90,7 @@
   ],
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
-  "forwardPorts": [8080, 9000, 5432, 8081],
+  "forwardPorts": [9000, 5432, 8081],
 
   // Use 'postCreateCommand' to run commands after the container is created.
   // "postCreateCommand": "sudo chmod a+x \"$(pwd)\" && sudo rm -rf /var/www/html && sudo ln -s \"$(pwd)\" /var/www/html"

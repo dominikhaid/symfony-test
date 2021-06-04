@@ -1,0 +1,54 @@
+{% extends 'layouts/content.html.twig' %}
+{% block javascripts %}
+	{{ encore_entry_script_tags('team') }}
+{% endblock %}
+{% block content %}
+	<div class="logo-headline w-100 d-flex mt-5 mb-3 align-self-start">
+		<div class="img m-2 d-flex flex-wrap  align-self-center">
+			{{ source('svg/brand-logo.svg') }}
+		</div>
+		<div class="w-75 d-flex flex-wrap align-self-end">
+			<h1 class="m-0">Team Profil -
+				{{ member.first_name }}
+				{{ member.last_name }}</h1>
+		</div>
+	</div>
+
+	{% for flashError in app.flashes('verify_email_error') %}
+		<div class="alert alert-danger" role="alert">{{ flashError }}</div>
+	{% endfor %}
+
+	{{ form_start(teamForm) }}
+	<picture>
+		{{ "/images/team#{asset(member.photo)}" | responsive_image }}
+		<img src="/images/team/{{asset(member.photo)}}" style="max-width:300px" class="team card-img-top" alt="{{member.first_name}} {{member.last_name}}">
+	</picture>
+	<div style="max-width:500px;" class="mt-3 row">
+		<div class="input-group  mb-3">
+			{{ form_label(teamForm.first_name, 'First name', {'label_attr': {'class': 'input-group-text'}}) }}
+			{{ form_widget(teamForm.first_name, {'attr': {'class': 'form-control',"aria-label":"first name"}}) }}
+		</div>
+		<div class="input-group mb-3">
+			{{ form_label(teamForm.last_name, 'Last name', {'label_attr': {'class': 'input-group-text'}}) }}
+			{{ form_widget(teamForm.last_name, {'attr': {'class': 'form-control',"aria-label":"last name"}}) }}
+		</div>
+		<div class="input-group mb-3">
+			{{ form_label(teamForm.role, 'Role', {'label_attr': {'class': 'input-group-text'}}) }}
+			{{ form_widget(teamForm.role, {'attr': {'class': 'form-control',"aria-label":"role"}}) }}
+		</div>
+		<div class="input-group mb-3">
+			{{ form_label(teamForm.photo, 'Photo', {'label_attr': {'class': 'input-group-text'}}) }}
+			{{ form_widget(teamForm.photo, {'attr': {'class': 'form-control',"aria-label":"photo"}}) }}
+		</div>
+		<div class="input-group">
+			{{ form_label(teamForm.description, 'Description', {'label_attr': {'class': 'input-group-text'}}) }}
+			{{ form_widget(teamForm.description, {'attr': {'class': 'form-control',"aria-label":"Description"}}) }}
+		</div>
+	</div>
+
+	<button type="submit" class="my-3 btn btn-success">Save</button>
+
+	{{ form_end(teamForm) }}
+
+
+{% endblock %}
