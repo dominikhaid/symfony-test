@@ -19,6 +19,10 @@ class TeamRepository extends ServiceEntityRepository
         parent::__construct($registry, Team::class);
     }
 
+    /**
+     * GET ALL TEAM MEMBERS FROM API.
+     * @return array
+     */
     public function getAllTeamMembers(): array
     {
         $conn = $this->getEntityManager()->getConnection();

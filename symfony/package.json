@@ -21,7 +21,8 @@
     "db:migrate": "php bin/console doctrine:migrations:migrate --write-sql",
     "db:make": "php bin/console make:migration",
     "cert": "symfony server:ca:install",
-    "check": "symfony check:requirements"
+    "check": "symfony check:requirements",
+    "php:fix": "./vendor/bin/php-cs-fixer fix src"
   },
   "browserslist": [
     "> 0.5%",
