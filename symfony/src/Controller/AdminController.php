@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Process\Process;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
@@ -23,7 +24,7 @@ class AdminController extends AbstractController
     public function teamMain(): Response
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $member = $entityManager->getRepository(Team::class)->getAllTeamMembers();
+        $member = $entityManager->getRepository(Team::class)->findAll();
 
         if (!$member) {
             throw $this->createNotFoundException('No team members found');
@@ -46,7 +47,7 @@ class AdminController extends AbstractController
         $form->handleRequest($request);
         $result = [];
 
-        if (true !== $form->isSubmitted()) {
+        if (false == $form->isSubmitted()) {
             $entityManager = $this->getDoctrine()->getManager();
             $id = $request->query->get('id');
             $member = false;
@@ -71,6 +72,18 @@ class AdminController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            $id = $request->query->get('id');
+            $member = false;
+
+            // if request query has id get team member by id
+            if ($id) {
+                $member = $entityManager->getRepository(Team::class)->find($id);
+            }
+
+            if (!$member) {
+                throw $this->createNotFoundException('No team members found');
+            }
+
             /** @var UploadedFile $photo */
             $photo = $form->get('photo')->getData();
 
@@ -89,12 +102,20 @@ class AdminController extends AbstractController
 
                     throw $this->createNotFoundException('Image could not be submited');
                 }
+                $member->setPhoto($newFilename);
 
-                $team->setPhoto($newFilename);
+                $process = new Process(['./convert.sh']);
+                $process->setWorkingDirectory('/workspace/symfony');
+                $process->run(function ($type, $buffer) {
+                    echo $buffer;
+                });
             }
 
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($team);
+            $member->setFirstName($form->get('first_name')->getData());
+            $member->setLastName($form->get('last_name')->getData());
+            $member->setRole($form->get('role')->getData());
+            $member->setDescription($form->get('description')->getData());
+
             $entityManager->flush();
 
             return $this->redirectToRoute('adminTeam');
@@ -137,7 +158,14 @@ class AdminController extends AbstractController
                 }
 
                 $team->setPhoto($newFilename);
+
+                $process = new Process(['./convert.sh']);
+                $process->setWorkingDirectory('/workspace/symfony');
+                $process->run(function ($type, $buffer) {
+                    echo $buffer;
+                });
             }
+
             $entityManager->persist($team);
             $entityManager->flush();
 

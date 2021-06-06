@@ -35,10 +35,6 @@ https://symfony.com/doc/current/cache.html
 ## Todo
 
 1. blog
-2. fix src set img creating
 3. login system -> admin
 4. php strict mode
 5. fixing general stuff
-6. fix notation and docker block
-7. fix docker proxy internet problem
-8. php-phar docblock liniting refine

@@ -1,15 +1,23 @@
 {
   "devDependencies": {
+    "@babel/core": "^7.14.3",
+    "@babel/plugin-transform-runtime": "^7.14.3",
+    "@symfony/ux-cropperjs": "file:vendor/symfony/ux-cropperjs/Resources/assets",
+    "@symfony/ux-dropzone": "file:vendor/symfony/ux-dropzone/Resources/assets",
     "autoprefixer": "^10.2.6",
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "bootstrap": "^5.0.1",
+    "cropperjs": "^1.5.9",
     "jquery": "^3.6.0",
     "popper.js": "^1.16.1",
-    "postcss-loader": "^5.0.0"
+    "postcss-loader": "^5.0.0",
+    "stimulus": "^2.0.0"
   },
   "dependencies": {
     "@popperjs/core": "^2.9.2",
     "@symfony/stimulus-bridge": "^2.1.0",
     "@symfony/webpack-encore": "^1.3.0",
+    "croppie": "^2.6.5",
     "sass": "^1.34.0",
     "sass-loader": "^11.1.1",
     "stimulus": "^2.0.0",
@@ -22,7 +30,7 @@
     "db:make": "php bin/console make:migration",
     "cert": "symfony server:ca:install",
     "check": "symfony check:requirements",
-    "php:fix": "./vendor/bin/php-cs-fixer fix src"
+    "php:fix": "./vendor/bin/php-cs-fixer fix src --rules=@Symfony"
   },
   "browserslist": [
     "> 0.5%",
