@@ -1,5 +1,6 @@
 {% extends 'layouts/content.html.twig' %}
 {% block javascripts %}
+	{{ parent() }}
 	{{ encore_entry_script_tags('team') }}
 {% endblock %}
 {% block content %}

@@ -31,13 +31,6 @@ class TeamController extends AbstractController
         return new Response(json_encode($result));
     }
 
-    /*
-     * TEAM MEMBER API
-     *
-     * @param Request $request
-     * @return Response
-     */
-
     #[Route('/api/team', name: '/api/team')]
     public function teamApi(Request $request): Response
     {
@@ -52,7 +45,7 @@ class TeamController extends AbstractController
 
         // if no id in query and method is get load all team members
         if (!$id && Request::METHOD_GET == $request->getMethod()) {
-            $member = $entityManager->getRepository(Team::class)->getAllTeamMembers();
+            $member = $entityManager->getRepository(Team::class)->findAll();
 
             if (!$member) {
                 throw $this->createNotFoundException('No team members found');
@@ -213,7 +206,7 @@ class TeamController extends AbstractController
     public function teamMain(): Response
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $member = $entityManager->getRepository(Team::class)->getAllTeamMembers();
+        $member = $entityManager->getRepository(Team::class)->findAll();
 
         if (!$member) {
             throw $this->createNotFoundException('No team members found');

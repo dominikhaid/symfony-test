@@ -7,10 +7,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method null|Team find($id, $lockMode = null, $lockVersion = null)
- * @method null|Team findOneBy(array $criteria, array $orderBy = null)
- * @method Team[]    findAll()
- * @method Team[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Team[] findAll()
  */
 class TeamRepository extends ServiceEntityRepository
 {
@@ -20,13 +17,11 @@ class TeamRepository extends ServiceEntityRepository
     }
 
     /**
-     * GET ALL TEAM MEMBERS FROM API.
-     * @return array
+     * Returns an array containing all team entrys.
      */
-    public function getAllTeamMembers(): array
+    public function findAll(): array
     {
         $conn = $this->getEntityManager()->getConnection();
-
         $sql = '
 SELECT id, first_name, last_name, role, photo, description FROM team
             ORDER BY first_name ASC
@@ -34,36 +29,6 @@ SELECT id, first_name, last_name, role, photo, description FROM team
         $stmt = $conn->prepare($sql);
         $stmt->executeQuery();
 
-        // returns an array of arrays (i.e. a raw data set)
         return $stmt->fetchAllAssociative();
     }
-
-    // /**
-    //  * @return Team[] Returns an array of Team objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('t.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Team
-    {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

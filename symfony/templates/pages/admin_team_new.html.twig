@@ -1,8 +1,17 @@
 {% extends 'layouts/content.html.twig' %}
+{% block title %}New Team Member
+{% endblock %}
+{% block stylesheets %}
+	{{ parent() }}
+	{{ encore_entry_link_tags('croppie') }}
+{% endblock %}
 {% block javascripts %}
+	{{ parent() }}
 	{{ encore_entry_script_tags('team') }}
+	{{ encore_entry_script_tags('croppie') }}
 {% endblock %}
 {% block content %}
+
 	<div class="logo-headline w-100 d-flex mt-5 mb-3 align-self-start">
 		<div class="img m-2 d-flex flex-wrap  align-self-center">
 			{{ source('svg/brand-logo.svg') }}
@@ -44,5 +53,22 @@
 
 	{{ form_end(teamForm) }}
 
+	<div class="modal fade" id="croppie-modal" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div id="demo-basic"></div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary">Understood</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 {% endblock %}

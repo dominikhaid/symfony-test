@@ -23,15 +23,18 @@ RUN if [ "${INSTALL_NODE}" = "true" ]; then su vscode -c "umask 0002 && . /usr/l
 
 #SYS TOOLSD
 RUN apt-get update \
-    && apt-get install -y vim vifm
+    && apt-get upgrade -y \
+    && apt-get install -y vim vifm curl imagemagick imagemagick-doc 
+
+
 
 #START PHP 
 #PHP LIBS
 RUN apt-get update \
-    && apt-get install -y libssl-dev libzip-dev firebird-dev freetds-dev freetds-bin freetds-common libldb-dev libldap2-dev libc-client-dev libc-client-dev libkrb5-dev libgmp-dev libpq-dev libenchant-dev libcurl4-openssl-dev libbz2-dev libmcrypt-dev libicu-dev libpng-dev libxml2-dev msmtp bash && rm -r /var/lib/apt/lists/*
-RUN ln -s /usr/lib/x86_64-linux-gnu/libsybdb.so /usr/lib/
-RUN mkdir /etc/php.d
-RUN ln -s /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini
+    && apt-get install -y libssl-dev libzip-dev firebird-dev freetds-dev freetds-bin freetds-common libldb-dev libldap2-dev libc-client-dev libc-client-dev libkrb5-dev libgmp-dev libpq-dev libenchant-dev libcurl4-openssl-dev libbz2-dev libmcrypt-dev libicu-dev libpng-dev libxml2-dev msmtp bash && rm -r /var/lib/apt/lists/* \
+    && ln -s /usr/lib/x86_64-linux-gnu/libsybdb.so /usr/lib/ \
+    && mkdir /etc/php.d \
+    && ln -s /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini
 
 RUN docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
     && docker-php-source extract \
@@ -51,5 +54,12 @@ RUN docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
 RUN sudo curl -sS https://get.symfony.com/cli/installer | sudo bash && sudo mv /root/.symfony/bin/symfony /usr/local/bin/symfony
 
 #END PHP
+
+#RUST
+USER vscode
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y \
+    && echo "export PATH=~/.cargo/bin:$PATH" >> ~/.bashrc \
+    && echo "source $HOME/.cargo/env" \
+    && cargo install sd
 
 

@@ -21,9 +21,9 @@ Encore
    * Each entry will result in one JavaScript file (e.g. app.js)
    * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
    */
-  .addEntry("app", "./assets/app.js")
-  .addEntry('team', './assets/js/team.js')
-  
+  .addEntry("app", "./assets/js/app.js")
+  .addEntry("team", "./assets/js/team.js")
+  .addEntry("croppie", "./assets/js/upload.js")
 
   // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
   .enableStimulusBridge("./assets/controllers.json")
@@ -58,17 +58,18 @@ Encore
 
   .configureBabel((config) => {
     config.plugins.push("@babel/plugin-proposal-class-properties");
+    config.plugins.push("@babel/plugin-transform-runtime");
   })
 
   // enables @babel/preset-env polyfills
   .configureBabelPresetEnv((config) => {
-    config.useBuiltIns = "usage";
+    config.useBuiltIns = "entry";
     config.corejs = 3;
   })
 
   // enables Sass/SCSS support
   .enableSassLoader()
-  .autoProvidejQuery()
+  .autoProvidejQuery();
 
 // uncomment if you use TypeScript
 //.enableTypeScriptLoader()
@@ -81,6 +82,5 @@ Encore
 //.enableIntegrityHashes(Encore.isProduction())
 
 // uncomment if you're having problems with a jQuery plugin
-
 
 module.exports = Encore.getWebpackConfig();
