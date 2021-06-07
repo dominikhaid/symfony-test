@@ -57,9 +57,9 @@ RUN sudo curl -sS https://get.symfony.com/cli/installer | sudo bash && sudo mv /
 
 #RUST
 USER vscode
-RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y \
-    && echo "export PATH=~/.cargo/bin:$PATH" >> ~/.bashrc \
-    && echo "source $HOME/.cargo/env" \
-    && cargo install sd
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y 
+
+ENV PATH="/home/vscode/.cargo/bin:${PATH}"
+RUN cargo install sd
 
 
