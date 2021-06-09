@@ -23,7 +23,7 @@ class TeamRepository extends ServiceEntityRepository
     {
         $conn = $this->getEntityManager()->getConnection();
         $sql = '
-SELECT id, first_name, last_name, role, photo, description FROM team
+SELECT id, first_name, last_name, email, department, role, photo, description FROM team
             ORDER BY first_name ASC
             ';
         $stmt = $conn->prepare($sql);

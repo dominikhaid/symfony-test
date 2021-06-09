@@ -22,13 +22,59 @@ class TeamController extends AbstractController
     {
         $result = [];
         $result['message'] = $message;
+
+        if (is_array($member)) {
+            foreach ($member as $key => $value) {
+                $result['data'][$key]['firstName'] = $member[$key]['first_name'];
+                $result['data'][$key]['lastName'] = $member[$key]['last_name'];
+                $result['data'][$key]['department'] = $member[$key]['department'];
+                $result['data'][$key]['photo'] = $member[$key]['photo'];
+                $result['data'][$key]['description'] = $member[$key]['description'];
+            }
+
+            return new Response(json_encode($result));
+        }
+
         $result['data']['firstName'] = $member->getFirstName();
         $result['data']['lastName'] = $member->getLastName();
-        $result['data']['role'] = $member->getRole();
+        $result['data']['department'] = $member->getDepartment();
         $result['data']['photo'] = $member->getPhoto();
         $result['data']['description'] = $member->getDescription();
 
         return new Response(json_encode($result));
+    }
+
+    /**
+     * Converts result to json response.
+     *
+     * @param mixed  $member
+     * @param string $message
+     */
+    public function formatTeamObj($member): array
+    {
+        if (is_array($member)) {
+            foreach ($member as $key => $value) {
+                $result[$key]['id'] = $member[$key]['id'];
+                $result[$key]['firstName'] = $member[$key]['first_name'];
+                $result[$key]['lastName'] = $member[$key]['last_name'];
+                $result[$key]['email'] = $member[$key]['email'];
+                $result[$key]['department'] = $member[$key]['department'];
+                $result[$key]['photo'] = $member[$key]['photo'];
+                $result[$key]['description'] = $member[$key]['description'];
+            }
+
+            return $result;
+        }
+
+        $result['id'] = $member->getId();
+        $result['firstName'] = $member->getFirstName();
+        $result['lastName'] = $member->getLastName();
+        $result['email'] = $member->getEmail();
+        $result['department'] = $member->getDepartment();
+        $result['photo'] = $member->getPhoto();
+        $result['description'] = $member->getDescription();
+
+        return $result;
     }
 
     #[Route('/api/team', name: '/api/team')]
@@ -52,11 +98,8 @@ class TeamController extends AbstractController
             }
 
             $entityManager->flush();
-            $result = [];
-            $result['message'] = 'Found team members';
-            $result['data'] = $member;
 
-            return new Response(json_encode($result));
+            return $this->apiResult($member, 'Found team members');
         }
 
         //if no member is found and method is not post, error response
@@ -73,6 +116,8 @@ class TeamController extends AbstractController
         if (Request::METHOD_PATCH == $request->getMethod()) {
             $firstName = $request->request->get('firstName');
             $lastName = $request->request->get('lastName');
+            $department = $request->request->get('department');
+            $email = $request->request->get('email');
             $role = $request->request->get('role');
             $photo = $request->request->get('photo');
             $description = $request->request->get('description');
@@ -84,11 +129,17 @@ class TeamController extends AbstractController
             if ($lastName) {
                 $member->setLastName($lastName);
             }
+            if ($email) {
+                $member->setPhoto($email);
+            }
+            if ($role) {
+                $member->setPhoto($role);
+            }
             if ($photo) {
                 $member->setPhoto($photo);
             }
-            if ($role) {
-                $member->setRole($role);
+            if ($department) {
+                $member->setRole($department);
             }
             if ($description) {
                 $member->setDescription($description);
@@ -111,6 +162,8 @@ class TeamController extends AbstractController
         if (Request::METHOD_POST == $request->getMethod()) {
             $firstName = $request->request->get('firstName');
             $lastName = $request->request->get('lastName');
+            $department = $request->request->get('department');
+            $email = $request->request->get('email');
             $role = $request->request->get('role');
             $photo = $request->request->get('photo');
             $description = $request->request->get('description');
@@ -127,8 +180,14 @@ class TeamController extends AbstractController
             if ($photo) {
                 $member->setPhoto($photo);
             }
+            if ($email) {
+                $member->setPhoto($email);
+            }
             if ($role) {
-                $member->setRole($role);
+                $member->setPhoto($role);
+            }
+            if ($department) {
+                $member->setRole($department);
             }
             if ($description) {
                 $member->setDescription($description);
@@ -150,49 +209,16 @@ class TeamController extends AbstractController
     #[Route('/about/team', name: '/about/team')]
     public function teamIndex(int $id): Response
     {
-        $member = [];
         $entityManager = $this->getDoctrine()->getManager();
         $result = $entityManager->getRepository(Team::class)->find($id);
-        $member['id'] = $result->getId();
-        $member['first_name'] = $result->getFirstName();
-        $member['last_name'] = $result->getLastName();
-        $member['role'] = $result->getRole();
-        $member['photo'] = $result->getPhoto();
-        $member['description'] = $result->getDescription();
 
-        if (!$member) {
+        if (!$result) {
             throw $this->createNotFoundException('No team members found');
         }
+
+        $member = $this->formatTeamObj($result);
 
         return $this->render('pages/team_detail.twig', [
-            'member' => $member,
-        ]);
-    }
-
-    /*
-       * RENDER TEAM MEMBER EDIT FORM
-       *
-       * @return Response
-       */
-
-    #[Route('/about/team/edit', name: '/about/team/edit')]
-    public function teamEdit(int $id): Response
-    {
-        $member = [];
-        $entityManager = $this->getDoctrine()->getManager();
-        $result = $entityManager->getRepository(Team::class)->find($id);
-        $member['id'] = $result->getId();
-        $member['first_name'] = $result->getFirstName();
-        $member['last_name'] = $result->getLastName();
-        $member['role'] = $result->getRole();
-        $member['photo'] = $result->getPhoto();
-        $member['description'] = $result->getDescription();
-
-        if (!$member) {
-            throw $this->createNotFoundException('No team members found');
-        }
-
-        return $this->render('pages/team_edit.twig', [
             'member' => $member,
         ]);
     }
@@ -206,11 +232,13 @@ class TeamController extends AbstractController
     public function teamMain(): Response
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $member = $entityManager->getRepository(Team::class)->findAll();
+        $result = $entityManager->getRepository(Team::class)->findAll();
 
-        if (!$member) {
+        if (!$result) {
             throw $this->createNotFoundException('No team members found');
         }
+
+        $member = $this->formatTeamObj($result);
 
         $entityManager->flush();
 

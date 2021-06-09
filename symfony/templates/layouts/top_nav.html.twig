@@ -2,9 +2,9 @@
 	{% set route_name = app.request.attributes.get('_route') %}
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark flex flex-column w-100 flex-wrap  px-5 py-0">
 		<div class="container-fluid">
-				    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 					{% set items = include("json/main_nav.json")  | json_decode %}
@@ -16,7 +16,7 @@
 
 						{% elseif item.submenu and item.submenu | length > 0 %}
 							<li class="nav-item dropdown">
-								<a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" href="{{item.href}}">{{item.title}}</a>
+								<a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" href="#">{{item.title}}</a>
 								<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 									{% for sub in item.submenu %}
 										<li>
@@ -28,6 +28,13 @@
 						</li>
 					{% endfor %}
 				</ul>
+
+				<ul class="de-flex w-100 justify-content-end navbar-nav me-auto mb-2 mb-lg-0">
+					<li class="nav-item">
+						<a class="nav-link" href="/admin">Login</a>
+					</li>
+				</ul>
+
 			</div>
 		</div>
 	</nav>

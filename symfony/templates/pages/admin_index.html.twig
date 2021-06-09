@@ -1,0 +1,13 @@
+{% extends 'layouts/content.html.twig' %}
+{% block title %}Admin
+{% endblock %}
+{% block content %}
+	<div class="list-group">
+		<a href="/admin/blog" aria-disabled="true" class="disabled list-group-item">Blog
+			<small class="pl-3 text-gray-500">| Manage Blog Entries here.</small>
+		</a>
+		<a href="/admin/team" class="list-group-item">Team
+			<small class="pl-3 text-gray-500">| Manage Members from the Team section here.</small>
+		</a>
+	</div>
+{% endblock %}

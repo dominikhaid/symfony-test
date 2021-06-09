@@ -15,6 +15,50 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 class AdminController extends AbstractController
 {
+    /**
+     * Converts result to json response.
+     *
+     * @param mixed  $member
+     * @param string $message
+     */
+    public function formatTeamObj($member): array
+    {
+        if (is_array($member)) {
+            foreach ($member as $key => $value) {
+                $result[$key]['id'] = $member[$key]['id'];
+                $result[$key]['firstName'] = $member[$key]['first_name'];
+                $result[$key]['lastName'] = $member[$key]['last_name'];
+                $result[$key]['email'] = $member[$key]['email'];
+                $result[$key]['department'] = $member[$key]['department'];
+                $result[$key]['photo'] = $member[$key]['photo'];
+                $result[$key]['description'] = $member[$key]['description'];
+            }
+
+            return $result;
+        }
+
+        $result['id'] = $member->getId();
+        $result['firstName'] = $member->getFirstName();
+        $result['lastName'] = $member->getLastName();
+        $result['email'] = $member->getEmail();
+        $result['department'] = $member->getDepartment();
+        $result['photo'] = $member->getPhoto();
+        $result['description'] = $member->getDescription();
+
+        return $result;
+    }
+
+    /* *
+       * RENDER ADMIN MAIN PAGE TILES VIEW
+       * @return Response
+       */
+
+    #[Route('/admin', name: '/admin')]
+    public function index(): Response
+    {
+        return $this->render('pages/admin_index.html.twig');
+    }
+
     /* *
        * RENDER ADMIN MAIN PAGE TILES VIEW
        * @return Response
@@ -24,16 +68,17 @@ class AdminController extends AbstractController
     public function teamMain(): Response
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $member = $entityManager->getRepository(Team::class)->findAll();
+        $result = $entityManager->getRepository(Team::class)->findAll();
 
-        if (!$member) {
+        if (!$result) {
             throw $this->createNotFoundException('No team members found');
         }
 
         $entityManager->flush();
+        $members = $this->formatTeamObj($result);
 
         return $this->render('pages/admin_team_index.html.twig', [
-            'team' => $member,
+            'team' => $members,
         ]);
     }
 
@@ -45,29 +90,24 @@ class AdminController extends AbstractController
         $team = new Team();
         $form = $this->createForm(TeamFormType::class, $team);
         $form->handleRequest($request);
-        $result = [];
 
         if (false == $form->isSubmitted()) {
             $entityManager = $this->getDoctrine()->getManager();
             $id = $request->query->get('id');
-            $member = false;
-            $member = $entityManager->getRepository(Team::class)->find($id);
+            $result = false;
+            $result = $entityManager->getRepository(Team::class)->find($id);
 
-            if (!$member) {
+            if (!$result) {
                 throw $this->createNotFoundException('No team members found');
             }
 
-            $result['first_name'] = $member->getFirstName();
-            $result['last_name'] = $member->getLastName();
-            $result['role'] = $member->getRole();
-            $result['photo'] = $member->getPhoto();
-            $result['description'] = $member->getDescription();
+            $member = $this->formatTeamObj($result);
 
-            $form['first_name']->setData($result['first_name']);
-            $form['last_name']->setData($result['last_name']);
-            $form['role']->setData($result['role']);
-            //$form['photo']->setData($result['photo']);
-            $form['description']->setData($result['description']);
+            $form['firstName']->setData($member['firstName']);
+            $form['lastName']->setData($member['lastName']);
+            $form['email']->setData($member['email']);
+            $form['department']->setData($member['department']);
+            $form['description']->setData($member['description']);
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -77,10 +117,10 @@ class AdminController extends AbstractController
 
             // if request query has id get team member by id
             if ($id) {
-                $member = $entityManager->getRepository(Team::class)->find($id);
+                $result = $entityManager->getRepository(Team::class)->find($id);
             }
 
-            if (!$member) {
+            if (!$result) {
                 throw $this->createNotFoundException('No team members found');
             }
 
@@ -94,7 +134,7 @@ class AdminController extends AbstractController
 
                 try {
                     $photo->move(
-                        'images/team',
+                        'images/dynamic/team',
                         $newFilename
                     );
                 } catch (FileException $e) {
@@ -102,7 +142,8 @@ class AdminController extends AbstractController
 
                     throw $this->createNotFoundException('Image could not be submited');
                 }
-                $member->setPhoto($newFilename);
+                $result->setPhoto($newFilename);
+                $result->setRole(0);
 
                 $process = new Process(['./convert.sh']);
                 $process->setWorkingDirectory('/workspace/symfony');
@@ -111,10 +152,11 @@ class AdminController extends AbstractController
                 });
             }
 
-            $member->setFirstName($form->get('first_name')->getData());
-            $member->setLastName($form->get('last_name')->getData());
-            $member->setRole($form->get('role')->getData());
-            $member->setDescription($form->get('description')->getData());
+            $result->setFirstName($form->get('firstName')->getData());
+            $result->setEmail($form->get('email')->getData());
+            $result->setLastName($form->get('lastName')->getData());
+            $result->setDepartment($form->get('department')->getData());
+            $result->setDescription($form->get('description')->getData());
 
             $entityManager->flush();
 
@@ -123,7 +165,7 @@ class AdminController extends AbstractController
 
         return $this->render('pages/admin_team_edit.html.twig', [
             'teamForm' => $form->createView(),
-            'member' => $result,
+            'member' => $member,
         ]);
     }
 
@@ -148,7 +190,7 @@ class AdminController extends AbstractController
 
                 try {
                     $photo->move(
-                        'images/team',
+                        'images/dynamic/team',
                         $newFilename
                     );
                 } catch (FileException $e) {

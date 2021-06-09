@@ -44,9 +44,13 @@ contact:
   path: /contact
   controller: App\Controller\ContactController::index
 
+admin:
+  path: /admin
+  controller: App\Controller\AdminController::index
+
 adminTeam:
   path: /admin/team
-  controller: App\Controller\AdminController::index
+  controller: App\Controller\AdminController::teamMain
 
 adminTeamEdit:
   path: /admin/team/edit

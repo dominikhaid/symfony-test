@@ -3,7 +3,7 @@ shopt -s nullglob dotglob
 options=($(echo $@ | tr " " "\n"))
 
 #NOTE DEAFULTS
-folder='./public/images/team'
+folder='./public/images/dynamic'
 type="jpg"
 ext=".jpg"
 convert=$type
