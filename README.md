@@ -38,3 +38,4 @@ https://symfony.com/doc/current/cache.html
 6. login system -> admin
 7. symfony service
 8. php strict mode
+9. Many more
