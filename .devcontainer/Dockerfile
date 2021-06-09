@@ -62,4 +62,4 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 ENV PATH="/home/vscode/.cargo/bin:${PATH}"
 RUN cargo install sd
 
-
+CMD  cd /workspace/symfony && composer install && symfony server:ca:install && yarn install && npm run db:migrate
