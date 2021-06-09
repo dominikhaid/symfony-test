@@ -34,7 +34,7 @@ https://symfony.com/doc/current/cache.html
 
 ## Todo
 
-1. blog -> add enty and form add main admin page
+1. blog -> single Pages  and backend
 6. login system -> admin
 7. symfony service
 8. php strict mode
